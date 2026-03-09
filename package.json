@@ -1,7 +1,7 @@
 {
   "name": "mcp-developer-context-server",
   "version": "1.0.0",
-  "description": "MCP server that exposes project context, codebase search, safe commands, and API spec summary for Cursor and other MCP clients.",
+  "description": "MCP Server that Exposes Project Context, Codebase Search, Safe Commands & API Spec Summary for Any Model Or MCP Client",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -20,7 +20,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
-    "inspector": "npx @modelcontextprotocol/inspector node dist/index.js",
+    "inspector": "cross-env DANGEROUSLY_OMIT_AUTH=true npx @modelcontextprotocol/inspector node dist/index.js",
     "lint": "eslint src/",
     "format": "prettier --write src/",
     "format:check": "prettier --check src/",
@@ -28,10 +28,12 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.0",
+    "fast-glob": "^3.3.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
     "@modelcontextprotocol/inspector": "^0.21.1",
+    "cross-env": "^7.0.3",
     "@types/node": "^22.0.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
