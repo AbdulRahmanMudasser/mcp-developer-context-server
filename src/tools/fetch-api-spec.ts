@@ -1,5 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
+import { fetchAndSummarizeOpenApi } from "../lib/openapi.js";
 
 export function registerFetchApiSpec(server: McpServer): void {
   server.registerTool(
@@ -11,8 +12,9 @@ export function registerFetchApiSpec(server: McpServer): void {
         url: z.string().url(),
       }),
     },
-    async () => ({
-      content: [{ type: "text" as const, text: "" }],
-    })
+    async (args) => {
+      const summary = await fetchAndSummarizeOpenApi(args.url);
+      return { content: [{ type: "text" as const, text: summary }] };
+    }
   );
 }

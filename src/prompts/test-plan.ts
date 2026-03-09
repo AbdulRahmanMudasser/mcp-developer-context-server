@@ -12,13 +12,12 @@ export function registerTestPlan(server: McpServer): void {
         entryPoints: z.string().optional(),
       },
     },
-    async ({ module: mod }) => ({
-      messages: [
-        {
-          role: "user" as const,
-          content: { type: "text" as const, text: mod },
-        },
-      ],
-    })
+    async ({ module: mod, entryPoints }) => {
+      const entryText = entryPoints ?? "main exports";
+      const text = `Suggest unit tests for the following module. Module: ${mod}. Entry points to cover: ${entryText}. Consider edge cases and error paths.`;
+      return {
+        messages: [{ role: "user" as const, content: { type: "text" as const, text } }],
+      };
+    }
   );
 }

@@ -12,13 +12,12 @@ export function registerApiUsage(server: McpServer): void {
         language: z.string().optional(),
       },
     },
-    async ({ operationId }) => ({
-      messages: [
-        {
-          role: "user" as const,
-          content: { type: "text" as const, text: operationId },
-        },
-      ],
-    })
+    async ({ operationId, language }) => {
+      const lang = language ?? "TypeScript";
+      const text = `Generate a ${lang} client example for the API operation with operationId: ${operationId}. Use the project's API spec if available.`;
+      return {
+        messages: [{ role: "user" as const, content: { type: "text" as const, text } }],
+      };
+    }
   );
 }
